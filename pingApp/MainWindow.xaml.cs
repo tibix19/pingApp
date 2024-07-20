@@ -5,6 +5,7 @@ using System.Windows.Threading;
 using System.Drawing;
 using System.Windows.Input;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace pingApp
 {
@@ -19,17 +20,20 @@ namespace pingApp
             InitializeComponent();
             // Instancier
             this.pingApp = new PingApp();
-            // Assigner
             this.DataContext = this.pingApp;
-            this.Title = "Ping App";
+            this.Title = "Ping App TIB";
 
             // Attacher un seul gestionnaire d'événements pour les raccourcis clavier
             this.KeyDown += Window_KeyDown;
-            
-            // Faire tourner les ping toutes les 2 minutes
+
+            // Configuration du timer pour les pings périodiques
             pingTimer = new DispatcherTimer();
-            pingTimer.Interval = TimeSpan.FromMinutes(2);
+            pingTimer.Interval = TimeSpan.FromMinutes(3);
             pingTimer.Tick += (sender, args) => pingApp.CheckAllPostesPing();
+            pingTimer.Tick += (s, e) =>
+            {
+                MessageBox.Show("Test");
+            };
             pingTimer.Start();
         }
 
@@ -53,7 +57,7 @@ namespace pingApp
             if (!string.IsNullOrWhiteSpace(this.pingApp.SelectedPost.Post))
             {
                 this.pingApp.PostesList.Add(this.pingApp.SelectedPost); // Ajoute les éléments dans les champs dans la liste
-                await Task.Run(() => pingApp.CheckPingNetworks(this.pingApp.SelectedPost)); // Check the poste if it ping directly
+                await Task.Run(() => pingApp.CheckPingNetworks(this.pingApp.SelectedPost, IsNewlyAdded: true)); // Check the poste if it ping directly
                 this.pingApp.SelectedPost = new Postes(); // Créer un nouveau SelectedPost pour le prochain ajout
                 this.pingApp.UpdateJSON(); // Update the JSON file with the value in the liste
                 this.pingApp.SearchPost(); // Rafraîchit la liste après la vérification du ping 
@@ -63,7 +67,7 @@ namespace pingApp
         // Shortcuts
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter && (Keyboard.FocusedElement == textbox_hos || Keyboard.FocusedElement == textbox_ticket))
+            if (e.Key == Key.Enter && (Keyboard.FocusedElement == textbox_hos))
             {
                 BtnAdd(null, null);
                 e.Handled = true;
@@ -75,7 +79,7 @@ namespace pingApp
             }
         }
 
-        // Action bouton clear
+        // Action du bouton Clear/Refresh
         private void BtnClear(object sender, RoutedEventArgs e)
         {
             this.pingApp.ClearFields(); // Vide les champs
@@ -84,9 +88,21 @@ namespace pingApp
             this.pingApp.SearchPost();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+
+        // Gestion de la fermeture de l'application
+        private void Application_Exit(object sender,CancelEventArgs e)
         {
-            this.pingApp.UpdateJSON(); // Update the JSON file with the value in the liste
+            this.pingApp.UpdateJSON(); // Mettre à jour le fichier en fonction de la liste
+            StopPingTimer(); // Arrete le thread
+        }
+
+        // Arrete le thread pour ping
+        private void StopPingTimer()
+        {
+            if (pingTimer != null && pingTimer.IsEnabled)
+            {
+                pingTimer.Stop(); // Stoper le thread si en cours
+            }
         }
     }
 }

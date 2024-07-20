@@ -1,7 +1,20 @@
 [
   {
-    "Post": "HOS69052",
+    "Post": "HOS66661",
+    "Ticket": "asdasddasd",
+    "IPAddress": "155.105.149.16",
+    "IsPingSuccessful": "Lan"
+  },
+  {
+    "Post": "asdsada",
     "Ticket": null,
-    "IsPingSuccessful": "Wifi"
+    "IPAddress": null,
+    "IsPingSuccessful": "False"
+  },
+  {
+    "Post": "SSI00095",
+    "Ticket": "6456265",
+    "IPAddress": "155.105.64.244",
+    "IsPingSuccessful": "Lan"
   }
 ]
