@@ -30,10 +30,10 @@ namespace pingApp
             pingTimer = new DispatcherTimer();
             pingTimer.Interval = TimeSpan.FromMinutes(3);
             pingTimer.Tick += (sender, args) => pingApp.CheckAllPostesPing();
-            pingTimer.Tick += (s, e) =>
+            /*pingTimer.Tick += (s, e) =>
             {
                 MessageBox.Show("Test");
-            };
+            };*/
             pingTimer.Start();
         }
 
@@ -56,11 +56,14 @@ namespace pingApp
             // check if the SelectedPost.Post is null
             if (!string.IsNullOrWhiteSpace(this.pingApp.SelectedPost.Post))
             {
+
+                pingApp.TrimPost(this.pingApp.SelectedPost);
+
                 this.pingApp.PostesList.Add(this.pingApp.SelectedPost); // Ajoute les éléments dans les champs dans la liste
                 await Task.Run(() => pingApp.CheckPingNetworks(this.pingApp.SelectedPost, IsNewlyAdded: true)); // Check the poste if it ping directly
                 this.pingApp.SelectedPost = new Postes(); // Créer un nouveau SelectedPost pour le prochain ajout
                 this.pingApp.UpdateJSON(); // Update the JSON file with the value in the liste
-                this.pingApp.SearchPost(); // Rafraîchit la liste après la vérification du ping 
+                this.pingApp.SearchPost(); // Rafraîchit la liste après la vérification du ping
             }
         }
 
@@ -82,6 +85,7 @@ namespace pingApp
         // Action du bouton Clear/Refresh
         private void BtnClear(object sender, RoutedEventArgs e)
         {
+            pingApp.TrimPost(this.pingApp.SelectedPost);
             this.pingApp.ClearFields(); // Vide les champs
             pingApp.CheckAllPostesPing(); // Check ping
             this.pingApp.UpdateJSON(); // Mettre à jour la fichier JSON

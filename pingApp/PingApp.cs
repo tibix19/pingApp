@@ -246,6 +246,16 @@ namespace pingApp
         }
 
 
+        // Enlever les espaces sur le champs post pour ne pas avoir de problème lors des pings
+        public void TrimPost(Postes post)
+        {
+            if (post != null)
+            {
+                post.Post = post.Post?.Trim();
+            }
+        }
+
+
         // Get the root path of the projet
         private string GetProjectRootPath()
         {

@@ -1,20 +1,32 @@
 [
   {
-    "Post": "HOS66661",
-    "Ticket": "asdasddasd",
-    "IPAddress": "155.105.149.16",
+    "Post": "HOS67240",
+    "Ticket": null,
+    "IPAddress": "10.132.34.61",
+    "IsPingSuccessful": "VPN"
+  },
+  {
+    "Post": "S1N00042D",
+    "Ticket": "6524152",
+    "IPAddress": "10.143.14.108",
     "IsPingSuccessful": "Lan"
   },
   {
-    "Post": "asdsada",
+    "Post": "sep006440B433B2",
+    "Ticket": null,
+    "IPAddress": "10.68.73.100",
+    "IsPingSuccessful": "Lan"
+  },
+  {
+    "Post": "HOS75598",
     "Ticket": null,
     "IPAddress": null,
     "IsPingSuccessful": "False"
   },
   {
-    "Post": "SSI00095",
-    "Ticket": "6456265",
-    "IPAddress": "155.105.64.244",
-    "IsPingSuccessful": "Lan"
+    "Post": "hos62758",
+    "Ticket": null,
+    "IPAddress": null,
+    "IsPingSuccessful": "False"
   }
 ]
