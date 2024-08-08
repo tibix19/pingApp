@@ -255,6 +255,13 @@ namespace pingApp
             }
         }
 
+        public void DeletePoste(Postes poste)
+        {
+            PostesList.Remove(poste);
+            SearchPost();
+            UpdateJSON();
+        }
+
 
         // Get the root path of the projet
         private string GetProjectRootPath()

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.Windows.Controls;
 
 namespace pingApp
 {
@@ -37,8 +38,8 @@ namespace pingApp
             pingTimer.Start();
         }
 
-        // Action bouton delete
-        private void BtnDelete(object sender, RoutedEventArgs e)
+        // Action bouton delete ----- PLUS UTILISE -----
+        /*private void BtnDelete(object sender, RoutedEventArgs e)
         {
             if (this.pingApp.SelectedPost != null) // check if a post is selected
             {
@@ -48,7 +49,7 @@ namespace pingApp
                 this.pingApp.SearchPost();
                 this.pingApp.UpdateJSON();
             }
-        }
+        }*/
 
         // Action bouton ajouter
         private async void BtnAdd(object sender, RoutedEventArgs e)
@@ -56,7 +57,7 @@ namespace pingApp
             // check if the SelectedPost.Post is null
             if (!string.IsNullOrWhiteSpace(this.pingApp.SelectedPost.Post))
             {
-
+                // Enlever les espaces du nom du postes pour que le ping fonctionne parfaitement
                 pingApp.TrimPost(this.pingApp.SelectedPost);
 
                 this.pingApp.PostesList.Add(this.pingApp.SelectedPost); // Ajoute les éléments dans les champs dans la liste
@@ -73,11 +74,6 @@ namespace pingApp
             if (e.Key == Key.Enter && (Keyboard.FocusedElement == textbox_hos))
             {
                 BtnAdd(null, null);
-                e.Handled = true;
-            }
-            else if (e.Key == Key.X && datagrid.SelectedItem != null)
-            {
-                BtnDelete(null, null);
                 e.Handled = true;
             }
         }
@@ -106,6 +102,14 @@ namespace pingApp
             if (pingTimer != null && pingTimer.IsEnabled)
             {
                 pingTimer.Stop(); // Stoper le thread si en cours
+            }
+        }
+
+        private void DeletePoste_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.CommandParameter is Postes posteToDelete)
+            {
+                this.pingApp.DeletePoste(posteToDelete);
             }
         }
     }

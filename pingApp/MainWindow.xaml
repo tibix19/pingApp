@@ -9,33 +9,68 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         xmlns:local="clr-namespace:pingApp"
         mc:Ignorable="d"
         Closing="Application_Exit"
-        Title="MainWindow" Height="337" Width="675">
-    <Grid Background="White">
+        Title="MainWindow" Height="338" Width="461">
+    <Grid Background="#F0F0F0">
         <!-- Légende des couleurs -->
-        <TextBox Background="Green" HorizontalAlignment="Left" Margin="23,16,0,0" FontSize="9" VerticalAlignment="Top" Height="25" Width="26" Text=" VPN" RenderTransformOrigin="-0.4,0.284" IsEnabled="False"></TextBox>
-        <TextBox Background="LightGreen" HorizontalAlignment="Left" Margin="56,16,0,0" FontSize="9" VerticalAlignment="Top" Height="24" Width="28" Text=" LAN" RenderTransformOrigin="-0.4,0.284" IsEnabled="False"></TextBox>
-        <TextBox Background="LightBlue" HorizontalAlignment="Left" Margin="89,16,0,0" FontSize="9" VerticalAlignment="Top" Height="24" Width="26" Text=" WIFI" RenderTransformOrigin="-0.4,0.284" IsEnabled="False"></TextBox>
-        <TextBox Background="LightCoral" HorizontalAlignment="Left" Margin="120,16,0,0" FontSize="9" VerticalAlignment="Top" Height="24" Width="40" Text=" No Conn" RenderTransformOrigin="-0.4,0.284" IsEnabled="False"></TextBox>
+        <TextBox Background="Green" Foreground="white" Margin="300,8,0,0" FontSize="9" VerticalAlignment="Top" Height="20" Text=" VPN" RenderTransformOrigin="-0.4,0.284" IsEnabled="False" BorderThickness="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" Width="26" />
+        <TextBox Background="LightGreen" Margin="330,8,0,0" FontSize="9" VerticalAlignment="Top" Height="20" Text=" LAN" RenderTransformOrigin="-0.4,0.284" IsEnabled="False" BorderThickness="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" Width="26"/>
+        <TextBox Background="LightBlue" Margin="360,8,0,0" FontSize="9" VerticalAlignment="Top" Height="20" Text=" WIFI" RenderTransformOrigin="-0.4,0.284" IsEnabled="False" BorderThickness="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" Width="26"/>
+        <TextBox Background="LightCoral" Margin="392,8,0,0" FontSize="9" VerticalAlignment="Top" Height="20" Text=" No Conn" RenderTransformOrigin="-0.4,0.284" IsEnabled="False" BorderThickness="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" Width="40"/>
 
-        <!-- Champs de saisie pour le poste et le ticket -->
-        <TextBox x:Name="textbox_hos" HorizontalAlignment="Left" Margin="70,109,0,0" TextWrapping="Wrap" FontSize="16" VerticalAlignment="Top" Width="125" Height="26" Text="{Binding SelectedPost.Post, UpdateSourceTrigger=PropertyChanged}"/>
-        <TextBox x:Name="textbox_ticket" HorizontalAlignment="Left" Margin="70,140,0,0" TextWrapping="Wrap" FontSize="16" VerticalAlignment="Top" Width="125" Height="26" Text="{Binding SelectedPost.Ticket, UpdateSourceTrigger=PropertyChanged}"/>
+        <!-- Champs de saisie pour le poste -->
+        <TextBox x:Name="textbox_hos"  
+                 HorizontalAlignment="Left" 
+                 Margin="13,8,0,0" TextWrapping="Wrap" 
+                 FontSize="14" 
+                 VerticalAlignment="Top" Width="136" Height="30" 
+                 Text="{Binding SelectedPost.Post, UpdateSourceTrigger=PropertyChanged}" 
+                 materialDesign:HintAssist.Hint="Post"
+                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                 Padding="5,2,0,0"
+                 MaxLength="25"
+                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+        />
 
-        <!-- Labels pour les champs de saisie -->
-        <TextBlock HorizontalAlignment="Left" Margin="23,116,0,0" TextWrapping="Wrap" FontSize="16" VerticalAlignment="Top" Height="17" Width="50"><Run Language="fr-ch" Text="Post"/></TextBlock>
-        <TextBlock HorizontalAlignment="Left" Margin="19,147,0,0" TextWrapping="Wrap" FontSize="16" VerticalAlignment="Top" Height="15" Width="50"><Run Language="fr-ch" Text="Ticket"/></TextBlock>
+        <!-- Champs de saisie pour le ticket -->
+        <TextBox x:Name="textbox_ticket" 
+                 HorizontalAlignment="Left" 
+                 Margin="13,46,0,0" TextWrapping="Wrap" 
+                 FontSize="14" 
+                 VerticalAlignment="Top" Width="136" Height="30"
+                 Text="{Binding SelectedPost.Ticket, UpdateSourceTrigger=PropertyChanged}" 
+                 materialDesign:HintAssist.Hint="Ticket"
+                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                 MaxLength="16"
+                 materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                 Padding="5,2,0,0"
+        />
 
         <!-- DataGrid pour afficher la liste des postes -->
-        <DataGrid x:Name="datagrid" ItemsSource="{Binding PostList_search}" EnableRowVirtualization="False" SelectedItem="{Binding SelectedPost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="273,51,19,19" AutoGenerateColumns="False" SelectionUnit="FullRow" FontSize="13" IsReadOnly="true">
+        <DataGrid x:Name="datagrid" Background="White" ItemsSource="{Binding PostList_search}" EnableRowVirtualization="False" SelectedItem="{Binding SelectedPost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="13,90,13,13" AutoGenerateColumns="False" SelectionUnit="FullRow" FontSize="13" IsReadOnly="true">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="Post" Binding="{Binding Post}" Header="Post" Width="*" />
+                <DataGridTextColumn x:Name="Post" Binding="{Binding Post}" Header="Post" Width="125" />
                 <DataGridTextColumn x:Name="IPAddress" Binding="{Binding IPAddress}" Header="IP" Width="*" />
-                <DataGridTextColumn x:Name="Ticket" Binding="{Binding Ticket}" Header="Ticket" Width="*" />
+                <DataGridTextColumn x:Name="Ticket" Binding="{Binding Ticket}" Header="Ticket" Width="100"/>
+                <DataGridTemplateColumn Header="" Width="50">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="DeletePoste_Click" 
+                                    CommandParameter="{Binding}"
+                                    Style="{StaticResource MaterialDesignFlatButton}" Padding="0,0,0,0" Margin="-15" Foreground="Black">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Delete" 
+                                        Height="20" 
+                                        Width="20" 
+                                        IsEnabled="False"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">
@@ -49,7 +84,7 @@
                             <Setter Property="Background" Value="LightBlue"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsPingSuccessful}" Value="VPN">
-                            <Setter Property="Background" Value="DarkGreen"/>
+                            <Setter Property="Background" Value="Green"/>
                         </DataTrigger>
                         <DataTrigger Binding="{Binding IsPingSuccessful}" Value="False">
                             <Setter Property="Background" Value="LightCoral"/>
@@ -59,14 +94,51 @@
             </DataGrid.RowStyle>
         </DataGrid>
 
-        <!-- Boutons pour les actions -->
-        <Button x:Name="btn_submit" Content="Add" HorizontalAlignment="Left" Margin="19,200,0,0" VerticalAlignment="Top" FontSize="15" Height="30" Width="60" BorderThickness="12"  Click="BtnAdd" FontWeight="Normal"/>
-        <Button x:Name="btn_delete" Content="Delete" HorizontalAlignment="Left" Margin="85,199,0,0" VerticalAlignment="Top" FontSize="15" Height="30" Width="75" BorderThickness="12" Click="BtnDelete" FontWeight="Normal"/>
-        <Button x:Name="btn_clear" Content="Refresh" HorizontalAlignment="Left" Margin="165,199,0,0" VerticalAlignment="Top" FontSize="15" Height="30" Width="85" BorderThickness="12" Click="BtnClear" FontWeight="Normal"/>
+        <!-- Boutons ajouter -->
+        <Button x:Name="btn_submit" 
+            Margin="154,46,0,0" 
+            VerticalAlignment="Top" 
+            Height="30" 
+            Width="33" 
+            HorizontalAlignment="Left" 
+            Click="BtnAdd" 
+            BorderThickness="12" 
+            FontWeight="Normal"  
+            Style="{StaticResource MaterialDesignRaisedButton}" Padding="0,0,0,0" Grid.IsSharedSizeScope="True">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Plus" 
+                         Height="20" 
+                         Width="20" 
+                         IsEnabled="False"/>
+            </StackPanel>
+        </Button>
 
-        <!-- Champ de recherche -->
-        <TextBox x:Name="textbox_search" Text="{Binding Search , Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="336,15,0,0" VerticalAlignment="Top" Height="25" FontSize="16" HorizontalAlignment="Left" Width="153" />
-        <TextBlock HorizontalAlignment="Left" Margin="273,18,0,0" VerticalAlignment="Top" Height="24" Width="63"><Run Language="fr-ch" Text="Search" FontSize="16"/></TextBlock>
+        <!-- Boutons Refresh -->
+        <Button x:Name="btn_clear" 
+            Margin="399,46,0,0" Height="30" Width="33"
+            VerticalAlignment="Top" HorizontalAlignment="Left"
+            Click="BtnClear"
+            BorderThickness="12" 
+            Style="{StaticResource MaterialDesignRaisedButton}" Padding="0,0,0,0" Grid.IsSharedSizeScope="True">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="Refresh" 
+                                 Height="20" 
+                                 Width="20" 
+                                 IsEnabled="False"/>
+            </StackPanel>
+        </Button>
 
+        <!-- Champs de Recherche -->
+        <TextBox x:Name="textbox_search"
+            Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            VerticalAlignment="Top" HorizontalAlignment="Left"
+            materialDesign:HintAssist.Hint="Rechercher..."
+            Style="{StaticResource MaterialDesignOutlinedTextBox}"
+            FontSize="14"
+            FontFamily="MaterialDesignFont"
+            Margin="270,46,0,0" Width="124" Height="30" Padding="5,2,0,0"
+            MaxLength="15"
+            materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+        />
     </Grid>
 </Window>
