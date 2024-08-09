@@ -1,14 +1,1 @@
-[
-  {
-    "Post": "HOS61987",
-    "Ticket": null,
-    "IPAddress": "155.105.77.218",
-    "IsPingSuccessful": "Lan"
-  },
-  {
-    "Post": "SSI00095",
-    "Ticket": null,
-    "IPAddress": "155.105.64.244",
-    "IsPingSuccessful": "Lan"
-  }
-]
+[]

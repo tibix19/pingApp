@@ -131,14 +131,14 @@
         <!-- Champs de Recherche -->
         <TextBox x:Name="textbox_search"
             Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            VerticalAlignment="Top" HorizontalAlignment="Left"
+            VerticalAlignment="Top"
             materialDesign:HintAssist.Hint="Rechercher..."
             Style="{StaticResource MaterialDesignOutlinedTextBox}"
             FontSize="14"
             FontFamily="MaterialDesignFont"
-            Margin="270,46,0,0" Width="124" Height="30" Padding="5,2,0,0"
+            Margin="270,46,0,0" Height="30" Padding="5,2,0,0"
             MaxLength="15"
-            materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+            materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden" HorizontalAlignment="Left" Width="124"
         />
     </Grid>
 </Window>
