@@ -36,6 +36,8 @@ namespace pingApp
                 MessageBox.Show("Test");
             };*/
             pingTimer.Start();
+
+            textbox_time.Text = "3";
         }
 
         // Action bouton delete ----- PLUS UTILISE -----
@@ -103,6 +105,29 @@ namespace pingApp
             {
                 pingTimer.Stop(); // Stoper le thread si en cours
             }
+        }
+
+
+        private void BtnUpdateTimer(object sender, EventArgs e)
+        {
+            pingTimer.Interval = GetTimer();
+        }
+
+        private TimeSpan GetTimer()
+        {
+            TimeSpan defaultTimer = TimeSpan.FromMinutes(3);
+            if (double.TryParse(textbox_time.Text, out double minutes))
+            {
+                return TimeSpan.FromMinutes(minutes);
+            }
+            return defaultTimer;
+        }
+
+        private void BtnReset(object sender, EventArgs e)
+        {
+            this.pingApp.ClearFields(); // Vide les champs
+            this.pingApp.UpdateJSON(); // Mettre à jour la fichier JSON
+            this.pingApp.SearchPost();
         }
 
         private void DeletePoste_Click(object sender, RoutedEventArgs e)

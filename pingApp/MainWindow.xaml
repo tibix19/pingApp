@@ -13,13 +13,22 @@
         xmlns:local="clr-namespace:pingApp"
         mc:Ignorable="d"
         Closing="Application_Exit"
-        Title="MainWindow" Height="338" Width="461">
-    <Grid Background="#F0F0F0">
+        Title="MainWindow" Height="316" Width="461">
+    <Grid Background="#F0F0F0" Margin="0,0,0,0">
+
+        <Button x:Name="reset"
+                Height="Auto"
+                Width="Auto"
+                BorderBrush="Transparent"
+                Background="Transparent"
+                Click="BtnReset" Margin="0,0,0,0"
+                />
+
         <!-- Légende des couleurs -->
-        <TextBox Background="Green" Foreground="white" Margin="300,8,0,0" FontSize="9" VerticalAlignment="Top" Height="20" Text=" VPN" RenderTransformOrigin="-0.4,0.284" IsEnabled="False" BorderThickness="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" Width="26" />
-        <TextBox Background="LightGreen" Margin="330,8,0,0" FontSize="9" VerticalAlignment="Top" Height="20" Text=" LAN" RenderTransformOrigin="-0.4,0.284" IsEnabled="False" BorderThickness="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" Width="26"/>
-        <TextBox Background="LightBlue" Margin="360,8,0,0" FontSize="9" VerticalAlignment="Top" Height="20" Text=" WIFI" RenderTransformOrigin="-0.4,0.284" IsEnabled="False" BorderThickness="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" Width="26"/>
-        <TextBox Background="LightCoral" Margin="392,8,0,0" FontSize="9" VerticalAlignment="Top" Height="20" Text=" No Conn" RenderTransformOrigin="-0.4,0.284" IsEnabled="False" BorderThickness="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" Width="40"/>
+        <TextBox Background="Green" Foreground="white" Margin="192,10,0,0" FontSize="9" VerticalAlignment="Top" Height="20" Text=" VPN" RenderTransformOrigin="-0.4,0.284" IsEnabled="False" BorderThickness="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" Width="26" />
+        <TextBox Background="LightGreen" Margin="223,10,0,0" FontSize="9" VerticalAlignment="Top" Height="20" Text=" LAN" RenderTransformOrigin="-0.4,0.284" IsEnabled="False" BorderThickness="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" Width="26"/>
+        <TextBox Background="LightBlue" Margin="254,10,0,0" FontSize="9" VerticalAlignment="Top" Height="20" Text=" WIFI" RenderTransformOrigin="-0.4,0.284" IsEnabled="False" BorderThickness="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" Width="26"/>
+        <TextBox Background="LightCoral" Margin="285,10,0,0" FontSize="9" VerticalAlignment="Top" Height="20" Text=" No Conn" RenderTransformOrigin="-0.4,0.284" IsEnabled="False" BorderThickness="0,0,0,0" Padding="0,0,0,0" HorizontalAlignment="Left" Width="40"/>
 
         <!-- Champs de saisie pour le poste -->
         <TextBox x:Name="textbox_hos"  
@@ -32,7 +41,8 @@
                  Style="{StaticResource MaterialDesignOutlinedTextBox}"
                  Padding="5,2,0,0"
                  MaxLength="25"
-                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                 Background="#F0F0F0"
+                 materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
         />
 
         <!-- Champs de saisie pour le ticket -->
@@ -46,11 +56,44 @@
                  Style="{StaticResource MaterialDesignOutlinedTextBox}"
                  MaxLength="16"
                  materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
-                 Padding="5,2,0,0"
+                 Background="#F0F0F0"
+                 Padding="5,3,0,0"
         />
 
+        <!-- Champs de saisie pour le timer -->
+        <TextBox x:Name="textbox_time" 
+                 HorizontalAlignment="Left" 
+                 Margin="361,10,0,0" TextWrapping="Wrap" 
+                 FontSize="16" 
+                 VerticalAlignment="Top" Width="33" Height="30"
+                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                 MaxLength="3"
+                 materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden"
+                 Padding="2,2,0,0"
+                 Background="#F0F0F0"
+         />
+
+        <Button x:Name="btn_update_timer"
+            Margin="399,10,0,0" 
+            VerticalAlignment="Top" 
+            Height="30" 
+            Width="33" 
+            HorizontalAlignment="Left" 
+            Click="BtnUpdateTimer" 
+            BorderThickness="12" 
+            FontWeight="Normal"  
+            Style="{StaticResource MaterialDesignRaisedButton}" Padding="0,0,0,0" Grid.IsSharedSizeScope="True">
+            <StackPanel Orientation="Horizontal">
+                <materialDesign:PackIcon Kind="timer" 
+                 Height="20" 
+                 Width="20" 
+                 IsEnabled="False"/>
+            </StackPanel>
+        </Button>
+
+
         <!-- DataGrid pour afficher la liste des postes -->
-        <DataGrid x:Name="datagrid" Background="White" ItemsSource="{Binding PostList_search}" EnableRowVirtualization="False" SelectedItem="{Binding SelectedPost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="13,90,13,13" AutoGenerateColumns="False" SelectionUnit="FullRow" FontSize="13" IsReadOnly="true">
+        <DataGrid x:Name="datagrid" Background="White" ItemsSource="{Binding PostList_search}" EnableRowVirtualization="False" SelectedItem="{Binding SelectedPost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="13,90,13,10" AutoGenerateColumns="False" SelectionUnit="FullRow" FontSize="13" IsReadOnly="true">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="Post" Binding="{Binding Post}" Header="Post" Width="125" />
                 <DataGridTextColumn x:Name="IPAddress" Binding="{Binding IPAddress}" Header="IP" Width="*" />
@@ -138,6 +181,7 @@
             FontFamily="MaterialDesignFont"
             Margin="270,46,0,0" Height="30" Padding="5,2,0,0"
             MaxLength="15"
+            Background="#F0F0F0"
             materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden" HorizontalAlignment="Left" Width="124"
         />
     </Grid>
