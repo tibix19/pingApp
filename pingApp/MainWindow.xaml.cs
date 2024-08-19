@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Controls;
+using MaterialDesignThemes.Wpf;
 
 namespace pingApp
 {
@@ -35,9 +36,9 @@ namespace pingApp
             {
                 MessageBox.Show("Test");
             };*/
-            pingTimer.Start();
+            pingTimer.Start(); // start the timer
 
-            textbox_time.Text = "3";
+            textbox_time.Text = "3"; // set the default value
         }
 
         // Action bouton delete ----- PLUS UTILISE -----
@@ -70,7 +71,7 @@ namespace pingApp
             }
         }
 
-        // Shortcuts
+        // Shortcuts enter key
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter && (Keyboard.FocusedElement == textbox_hos))
@@ -110,17 +111,21 @@ namespace pingApp
 
         private void BtnUpdateTimer(object sender, EventArgs e)
         {
-            pingTimer.Interval = GetTimer();
+            pingTimer.Interval = GetTimer(); // update timer 
+            // comment for the dialog
+            MessageTextBlock.Text = $"Le timer a été modifié.\n" +
+                                    $"Ping tous les {GetTimer()} s.";
         }
 
         private TimeSpan GetTimer()
         {
-            TimeSpan defaultTimer = TimeSpan.FromMinutes(3);
+            TimeSpan defaultTimer = TimeSpan.FromMinutes(3); // Default timer 3 minutes
+            // if we can convert to double we change the value of the timer
             if (double.TryParse(textbox_time.Text, out double minutes))
             {
-                return TimeSpan.FromMinutes(minutes);
+                return TimeSpan.FromMinutes(minutes); // return new value
             }
-            return defaultTimer;
+            return defaultTimer; // return default value (3)
         }
 
         private void BtnReset(object sender, EventArgs e)

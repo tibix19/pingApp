@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
@@ -176,6 +177,10 @@ namespace pingApp
 
             if (poste.IsPingSuccessful != newPingStatus)
             {
+                // Mettre à jour l'IP du post
+                PreviousIpAddr = poste.IPAddress;
+                poste.IPAddress = IpAddr;
+
                 if (IsNewlyAdded == false)
                 {
                     // Notify if status has changed only if it is not a new post
@@ -184,12 +189,9 @@ namespace pingApp
                 // Mettre à jour l'état post
                 PreviousPingStatus = poste.IsPingSuccessful;
                 poste.IsPingSuccessful = newPingStatus;
-                
+
+                SearchPost();
             }
-            // Mettre à jour l'IP du post
-            PreviousIpAddr = poste.IPAddress;
-            poste.IPAddress = IpAddr;
-            SearchPost();
         }
 
         // Make the ping
@@ -240,7 +242,7 @@ namespace pingApp
                 new ToastContentBuilder()
                 .AddArgument("action", "viewPost")
                 .AddText($"{poste.Post} est connecté au {newPingStatus}")
-                .AddText($"Adresse IP {PreviousIpAddr}")
+                .AddText($"Adresse IP {poste.IPAddress}")
                 .Show();
             }     
         }
