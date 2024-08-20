@@ -14,6 +14,7 @@
         mc:Ignorable="d"
         Closing="Application_Exit"
         Title="MainWindow" Height="316" Width="461">
+        <!-- Dialog (popup)-->
         <materialDesign:DialogHost x:Name="DialogHost"
                            CloseOnClickAway="True">
             <materialDesign:DialogHost.DialogContent>
@@ -29,7 +30,8 @@
         </materialDesign:DialogHost.DialogContent>
             
         <Grid Background="#F0F0F0" Margin="0,0,0,0">
-
+            
+            <!-- Bouton hidden for reset textbox value -->
             <Button x:Name="reset"
                     Height="Auto"
                     Width="Auto"
@@ -86,6 +88,7 @@
                      Background="#F0F0F0"
              />
 
+            <!-- Bouton Update Timer value + Dialog -->
             <Button x:Name="btn_update_timer"
                 Margin="399,10,0,0" 
                 VerticalAlignment="Top" 
@@ -208,8 +211,8 @@
                 Margin="270,46,0,0" Height="30" Padding="5,2,0,0"
                 MaxLength="15"
                 Background="#F0F0F0"
-                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden" HorizontalAlignment="Left" Width="124"
-            />
+                materialDesign:TextFieldAssist.CharacterCounterVisibility="Hidden" HorizontalAlignment="Left" Width="124"/>
+            
         </Grid>
     </materialDesign:DialogHost>
 </Window>

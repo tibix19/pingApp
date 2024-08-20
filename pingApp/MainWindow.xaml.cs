@@ -13,7 +13,7 @@ namespace pingApp
 {
     public partial class MainWindow : Window
     {
-        public PingApp pingApp { get; set; }
+        public PingApp PingApp { get; set; }
         private readonly DispatcherTimer pingTimer;
 
         // Construteur
@@ -21,8 +21,8 @@ namespace pingApp
         {
             InitializeComponent();
             // Instancier
-            this.pingApp = new PingApp();
-            this.DataContext = this.pingApp;
+            this.PingApp = new PingApp();
+            this.DataContext = this.PingApp;
             this.Title = "Ping App TIB";
 
             // Attacher un seul gestionnaire d'événements pour les raccourcis clavier
@@ -31,7 +31,7 @@ namespace pingApp
             // Configuration du timer pour les pings périodiques
             pingTimer = new DispatcherTimer();
             pingTimer.Interval = TimeSpan.FromMinutes(3);
-            pingTimer.Tick += (sender, args) => pingApp.CheckAllPostesPing();
+            pingTimer.Tick += (sender, args) => PingApp.CheckAllPostesPing();
             /*pingTimer.Tick += (s, e) =>
             {
                 MessageBox.Show("Test");
@@ -41,33 +41,20 @@ namespace pingApp
             textbox_time.Text = "3"; // set the default value
         }
 
-        // Action bouton delete ----- PLUS UTILISE -----
-        /*private void BtnDelete(object sender, RoutedEventArgs e)
-        {
-            if (this.pingApp.SelectedPost != null) // check if a post is selected
-            {
-                this.pingApp.PostesList.Remove(this.pingApp.SelectedPost); // Remove the post from the list
-                this.pingApp.SearchPost();
-                this.pingApp.SelectedPost = new Postes();
-                this.pingApp.SearchPost();
-                this.pingApp.UpdateJSON();
-            }
-        }*/
-
         // Action bouton ajouter
         private async void BtnAdd(object sender, RoutedEventArgs e)
         {
             // check if the SelectedPost.Post is null
-            if (!string.IsNullOrWhiteSpace(this.pingApp.SelectedPost.Post))
+            if (!string.IsNullOrWhiteSpace(this.PingApp.SelectedPost.Post))
             {
                 // Enlever les espaces du nom du postes pour que le ping fonctionne parfaitement
-                pingApp.TrimPost(this.pingApp.SelectedPost);
+                this.PingApp.TrimPost(this.PingApp.SelectedPost);
 
-                this.pingApp.PostesList.Add(this.pingApp.SelectedPost); // Ajoute les éléments dans les champs dans la liste
-                await Task.Run(() => pingApp.CheckPingNetworks(this.pingApp.SelectedPost, IsNewlyAdded: true)); // Check the poste if it ping directly
-                this.pingApp.SelectedPost = new Postes(); // Créer un nouveau SelectedPost pour le prochain ajout
-                this.pingApp.UpdateJSON(); // Update the JSON file with the value in the liste
-                this.pingApp.SearchPost(); // Rafraîchit la liste après la vérification du ping
+                this.PingApp.PostesList.Add(this.PingApp.SelectedPost); // Ajoute les éléments dans les champs dans la liste
+                await Task.Run(() => PingApp.CheckPingNetworks(this.PingApp.SelectedPost, IsNewlyAdded: true)); // Check the poste if it ping directly
+                this.PingApp.SelectedPost = new Postes(); // Créer un nouveau SelectedPost pour le prochain ajout
+                this.PingApp.UpdateJSON(); // Update the JSON file with the value in the liste
+                this.PingApp.SearchPost(); // Rafraîchit la liste après la vérification du ping
             }
         }
 
@@ -84,18 +71,18 @@ namespace pingApp
         // Action du bouton Clear/Refresh
         private void BtnClear(object sender, RoutedEventArgs e)
         {
-            pingApp.TrimPost(this.pingApp.SelectedPost);
-            this.pingApp.ClearFields(); // Vide les champs
-            pingApp.CheckAllPostesPing(); // Check ping
-            this.pingApp.UpdateJSON(); // Mettre à jour la fichier JSON
-            this.pingApp.SearchPost();
+            this.PingApp.TrimPost(this.PingApp.SelectedPost);
+            this.PingApp.ClearFields(); // Vide les champs
+            this.PingApp.CheckAllPostesPing(); // Check ping
+            this.PingApp.UpdateJSON(); // Mettre à jour la fichier JSON
+            this.PingApp.SearchPost();
         }
 
 
         // Gestion de la fermeture de l'application
         private void Application_Exit(object sender,CancelEventArgs e)
         {
-            this.pingApp.UpdateJSON(); // Mettre à jour le fichier en fonction de la liste
+            this.PingApp.UpdateJSON(); // Mettre à jour le fichier en fonction de la liste
             StopPingTimer(); // Arrete le thread
         }
 
@@ -108,15 +95,16 @@ namespace pingApp
             }
         }
 
-
+        // Bouton pour changer le timer
         private void BtnUpdateTimer(object sender, EventArgs e)
         {
             pingTimer.Interval = GetTimer(); // update timer 
             // comment for the dialog
             MessageTextBlock.Text = $"Le timer a été modifié.\n" +
-                                    $"Ping tous les {GetTimer()} s.";
+                                    $"Ping tous les {GetTimer()}";
         }
 
+        // Recup le timer (string) et convert en double
         private TimeSpan GetTimer()
         {
             TimeSpan defaultTimer = TimeSpan.FromMinutes(3); // Default timer 3 minutes
@@ -128,18 +116,20 @@ namespace pingApp
             return defaultTimer; // return default value (3)
         }
 
+        // Bouton refresh champs hidden
         private void BtnReset(object sender, EventArgs e)
         {
-            this.pingApp.ClearFields(); // Vide les champs
-            this.pingApp.UpdateJSON(); // Mettre à jour la fichier JSON
-            this.pingApp.SearchPost();
+            this.PingApp.ClearFields(); // Vide les champs
+            this.PingApp.UpdateJSON(); // Mettre à jour la fichier JSON
+            this.PingApp.SearchPost();
         }
 
+        // Bouton delete dans le datagrid
         private void DeletePoste_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.CommandParameter is Postes posteToDelete)
             {
-                this.pingApp.DeletePoste(posteToDelete);
+                this.PingApp.DeletePoste(posteToDelete);
             }
         }
     }
